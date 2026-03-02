@@ -15,8 +15,8 @@ class RAGEngine:
     def __init__(self):
         self.embedding = HuggingFaceEmbeddings(
             model_name="sentence-transformers/all-MiniLM-L6-v2"
-        )
-
+        ) 
+          
         self.llm = ChatGroq(
             model="openai/gpt-oss-120b",
             temperature=0,
@@ -104,5 +104,4 @@ class RAGEngine:
         
         self.db.save_conversation(user_id, question, answer)
 
-        return answer
-   
+        return answer    
