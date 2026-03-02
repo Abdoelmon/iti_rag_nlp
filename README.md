@@ -175,7 +175,6 @@ Enter a question like:
 - What is NLP?
 - Explain tokenization.
 - What is text preprocessing?
-- Difference between stemming and lemmatization?
 
 The system will:
 
@@ -303,7 +302,6 @@ You now have:
 - Per-user FAISS index
 - Conversation persistence
 - API + UI
-- Production-ready architecture (without Docker)
 
 ---
 
