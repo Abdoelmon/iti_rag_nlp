@@ -1,4 +1,6 @@
 import os
+
+import langchain_core
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
@@ -21,15 +23,33 @@ class RAGEngine:
             api_key=os.getenv("GROQ_API_KEY")
         )
 
-        self.prompt = ChatPromptTemplate.from_template("""
-        Answer based only on the context.
-
-        Context:
-        {context}
-
-        Question:
-        {question}
-        """)
+        self.prompt = ChatPromptTemplate.from_messages([
+             (
+                "system",
+                """You are an expert AI assistant specialized in document-based question answering.
+                You MUST strictly follow these constraints:
+                - Use ONLY the provided context.
+                - Do NOT rely on external knowledge.
+                - If information is missing, explicitly state that it is not in the document.
+                - Do not speculate.
+                - Do not invent.
+                - Provide structured and well-formatted answers.
+                - When summarizing, focus only on key insights from the context.
+                - If multiple relevant parts exist, synthesize them clearly.
+                - Maintain professional tone at all times.
+                """
+            ),
+             
+            (
+                "human",
+                """Context:
+                {context}
+                
+                Question:
+                {question}
+                """
+                    )
+                ])
 
         self.parser = StrOutputParser()
     
