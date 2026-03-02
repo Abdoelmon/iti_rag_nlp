@@ -25,23 +25,6 @@ with st.sidebar:
         except Exception as e:
             st.error(f"Upload error: {e}")
 
-    
-    if uploaded_file and st.button("Summarize PDF"):
-        try:
-            r = requests.post(
-                "http://localhost:8000/summarize",
-                data={"user_id": user_id}
-            )
-            if r.status_code == 200:
-                summary = r.json().get("summary", "")
-                st.subheader("📝 PDF Summary")
-                st.markdown(summary)   
-            else:
-                st.error(f"Summarize failed: {r.json().get('detail', r.text)}")
-        except Exception as e:
-            st.error(f"Summarize error: {e}")
-
-
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
